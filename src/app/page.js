@@ -1,101 +1,78 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import dynamic from "next/dynamic";
+import AboutContent from './about/page'; // Import the content from about/page.js
+
+// Import Lottie dynamically (avoids SSR issues)
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
+
+export default function LandingPage() {
+  const [animationData, setAnimationData] = useState(null);
+
+  // Load animation only on the client side
+
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="relative flex flex-col items-center justify-center min-h-screen bg-[#10131C] text-white px-6 overflow-hidden">
+      
+      {/* Only Render Lottie if animationData is Loaded */}
+      {animationData && (
+        <div className="absolute top-0 left-0 w-full h-full opacity-100 flex items-center justify-center pointer-events-none backdrop-blur-lg bg-white/30 rounded-lg">
+          <Lottie animationData={animationData} loop autoplay speed={0.5} />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      )}
+
+      <h1 className="text-5xl font-bold mb-6 relative z-10">Welcome to Morphika</h1>
+      
+      <p className="text-xl text-gray-400 mb-8 text-center max-w-2xl relative z-10">
+        AI-powered product image creation at your fingertips. Train AI models and generate high-quality content effortlessly.
+      </p>
+
+      {/* Call to Action Buttons */}
+      <div className="flex gap-4 relative z-10">
+        <Link 
+          href="/auth" 
+          className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition transform hover:scale-105"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          Get Started
+        </Link>
+        
+        <Link 
+          href="/about"
+          className="bg-gray-800 hover:bg-gray-700 text-white px-8 py-3 rounded-lg font-medium transition transform hover:scale-105"
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          Learn More
+        </Link>
+      </div>
+
+      {/* Features Section */}
+      <div className="mt-20 relative z-10" id="features">
+        <h2 className="text-3xl font-bold mb-6 text-center">Features</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="bg-gray-800 p-6 rounded-lg transition transform hover:scale-105">
+            <h3 className="text-xl font-bold mb-3">AI Model Training</h3>
+            <p className="text-gray-400">Train AI models for your product imagery.</p>
+          </div>
+          <div className="bg-gray-800 p-6 rounded-lg transition transform hover:scale-105">
+            <h3 className="text-xl font-bold mb-3">Instant Image Generation</h3>
+            <p className="text-gray-400">Generate product mockups in seconds.</p>
+          </div>
+          <div className="bg-gray-800 p-6 rounded-lg transition transform hover:scale-105">
+            <h3 className="text-xl font-bold mb-3">High-Resolution Quality</h3>
+            <p className="text-gray-400">Download high-quality AI-generated images.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* About Section */}
+      <div className="mt-20 relative z-10" id="about">
+        <h2 className="text-3xl font-bold mb-6 text-center"></h2>
+        <div className="text-gray-400 text-center max-w-2xl mx-auto">
+          <AboutContent />
+        </div>
+      </div>
     </div>
   );
 }
