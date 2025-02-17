@@ -11,7 +11,7 @@ export default function Dashboard() {
   const [description, setDescription] = useState("");
   const [uploadedImages, setUploadedImages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [userId, setUserId] = useState(null); // Store the logged-in user's ID
+  const [userId, setUserId] = useState(null); // Store the  checking/11111logged-in user's ID
 
   // 🔹 Fetch authenticated user details
   useEffect(() => {
